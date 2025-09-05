@@ -2,95 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Warehouse Management Design System - Industrial Theme */
+/* All colors MUST be HSL */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    /* Industrial Color Palette */
+    --background: 220 20% 97%;
+    --foreground: 220 30% 15%;
+    
+    /* Brand Colors - Warehouse Theme */
+    --warehouse-primary: 210 100% 45%;
+    --warehouse-primary-light: 210 100% 60%;
+    --warehouse-secondary: 25 95% 55%;
+    --warehouse-accent: 160 60% 45%;
+    
+    /* Semantic Colors */
+    --success: 140 70% 45%;
+    --warning: 45 95% 60%;
+    --danger: 0 85% 60%;
+    --info: 210 100% 60%;
+    
+    /* Neutral Palette */
+    --neutral-50: 220 20% 98%;
+    --neutral-100: 220 15% 95%;
+    --neutral-200: 220 15% 88%;
+    --neutral-300: 220 12% 75%;
+    --neutral-400: 220 10% 55%;
+    --neutral-500: 220 10% 40%;
+    --neutral-600: 220 15% 25%;
+    --neutral-700: 220 20% 18%;
+    --neutral-800: 220 25% 12%;
+    --neutral-900: 220 30% 8%;
+    
+    /* Component Mapping */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: var(--neutral-900);
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --popover-foreground: var(--neutral-900);
+    
+    --primary: var(--warehouse-primary);
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: var(--neutral-100);
+    --secondary-foreground: var(--neutral-900);
+    
+    --muted: var(--neutral-100);
+    --muted-foreground: var(--neutral-500);
+    
+    --accent: var(--warehouse-accent);
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: var(--danger);
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: var(--neutral-200);
+    --input: var(--neutral-200);
+    --ring: var(--warehouse-primary);
+    
+    --radius: 8px;
+    
+    /* Status Colors */
+    --status-available: var(--success);
+    --status-occupied: var(--warehouse-secondary);
+    --status-scheduled: var(--warning);
+    --status-transit: var(--info);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--warehouse-primary)), hsl(var(--warehouse-primary-light)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--warehouse-secondary)), hsl(25 95% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--neutral-50)), hsl(var(--neutral-100)));
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(var(--neutral-900) / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(var(--neutral-900) / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(var(--neutral-900) / 0.1);
+    --shadow-glow: 0 0 20px hsl(var(--warehouse-primary) / 0.3);
+    
+    /* Animations */
+    --transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Sidebar tokens */
+    --sidebar-background: var(--neutral-50);
+    --sidebar-foreground: var(--neutral-700);
+    --sidebar-primary: var(--warehouse-primary);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: var(--neutral-100);
+    --sidebar-accent-foreground: var(--neutral-900);
+    --sidebar-border: var(--neutral-200);
+    --sidebar-ring: var(--warehouse-primary);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: var(--neutral-900);
+    --foreground: var(--neutral-100);
+    
+    --card: var(--neutral-800);
+    --card-foreground: var(--neutral-100);
+    
+    --popover: var(--neutral-800);
+    --popover-foreground: var(--neutral-100);
+    
+    --primary: var(--warehouse-primary-light);
+    --primary-foreground: var(--neutral-900);
+    
+    --secondary: var(--neutral-800);
+    --secondary-foreground: var(--neutral-100);
+    
+    --muted: var(--neutral-800);
+    --muted-foreground: var(--neutral-400);
+    
+    --accent: var(--warehouse-accent);
+    --accent-foreground: var(--neutral-100);
+    
+    --destructive: var(--danger);
+    --destructive-foreground: var(--neutral-100);
+    
+    --border: var(--neutral-700);
+    --input: var(--neutral-700);
+    --ring: var(--warehouse-primary-light);
+    
+    --sidebar-background: var(--neutral-800);
+    --sidebar-foreground: var(--neutral-200);
+    --sidebar-primary: var(--warehouse-primary-light);
+    --sidebar-primary-foreground: var(--neutral-900);
+    --sidebar-accent: var(--neutral-700);
+    --sidebar-accent-foreground: var(--neutral-100);
+    --sidebar-border: var(--neutral-700);
+    --sidebar-ring: var(--warehouse-primary-light);
   }
 }
 
@@ -100,6 +141,65 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Status indicator animations */
+  .status-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .status-available {
+    @apply bg-green-500 text-white;
+  }
+  
+  .status-occupied {
+    @apply bg-orange-500 text-white;
+  }
+  
+  .status-scheduled {
+    @apply bg-yellow-500 text-white;
+  }
+  
+  .status-transit {
+    @apply bg-blue-500 text-white;
+  }
+  
+  /* Card hover effects */
+  .card-hover {
+    transition: var(--transition-smooth);
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  /* Warehouse grid animation */
+  .warehouse-grid-item {
+    transition: var(--transition-base);
+  }
+  
+  .warehouse-grid-item:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Gradient backgrounds */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .bg-gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .bg-gradient-subtle {
+    background: var(--gradient-subtle);
   }
 }
