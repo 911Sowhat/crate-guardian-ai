@@ -41,15 +41,15 @@ export default function Dashboard({ stats }: DashboardProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Warehouse Dashboard</h1>
-          <p className="text-muted-foreground">Monitor your crate inventory and operations</p>
+          <h1 className="text-3xl font-bold text-white">Warehouse Dashboard</h1>
+          <p className="text-white/80">Monitor your crate inventory and operations</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">
+          <Button variant="glass" size="sm">
             <Scan className="h-4 w-4 mr-2" />
             Scan Crate
           </Button>
-          <Button className="bg-gradient-primary" size="sm">
+          <Button variant="glass" size="sm">
             <Plus className="h-4 w-4 mr-2" />
             Add Crate
           </Button>

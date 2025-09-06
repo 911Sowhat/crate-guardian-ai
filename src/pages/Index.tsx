@@ -141,23 +141,31 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-primary">
       <div className="container mx-auto p-6">
+        {/* Main Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-5xl font-bold text-white mb-2 tracking-tight">
+            Sassy's Warehouse
+          </h1>
+          <p className="text-white/80 text-lg">Professional Crate Management System</p>
+        </div>
+        
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-[600px]">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2">
+          <TabsList className="grid w-full grid-cols-4 lg:w-[600px] glass-card p-1">
+            <TabsTrigger value="dashboard" className="flex items-center gap-2 text-white/80 data-[state=active]:bg-white/20 data-[state=active]:text-white">
               <BarChart3 className="h-4 w-4" />
               Dashboard
             </TabsTrigger>
-            <TabsTrigger value="crates" className="flex items-center gap-2">
+            <TabsTrigger value="crates" className="flex items-center gap-2 text-white/80 data-[state=active]:bg-white/20 data-[state=active]:text-white">
               <Package className="h-4 w-4" />
               Crates
             </TabsTrigger>
-            <TabsTrigger value="layout" className="flex items-center gap-2">
+            <TabsTrigger value="layout" className="flex items-center gap-2 text-white/80 data-[state=active]:bg-white/20 data-[state=active]:text-white">
               <LayoutGrid className="h-4 w-4" />
               Layout
             </TabsTrigger>
-            <TabsTrigger value="scanner" className="flex items-center gap-2">
+            <TabsTrigger value="scanner" className="flex items-center gap-2 text-white/80 data-[state=active]:bg-white/20 data-[state=active]:text-white">
               <Scan className="h-4 w-4" />
               Scanner
             </TabsTrigger>
@@ -186,7 +194,7 @@ const Index = () => {
                   className="pl-10"
                 />
               </div>
-              <Button variant="outline">
+              <Button variant="glass">
                 <Filter className="h-4 w-4 mr-2" />
                 Filter
               </Button>
