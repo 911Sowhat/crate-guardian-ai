@@ -35,7 +35,13 @@ const StatCard = ({ title, value, icon: Icon, trend, description }: {
   </Card>
 );
 
-export default function Dashboard({ stats }: DashboardProps) {
+interface DashboardProps {
+  stats: WarehouseStats;
+  onScanCrate?: () => void;
+  onAddCrate?: () => void;
+}
+
+export default function Dashboard({ stats, onScanCrate, onAddCrate }: DashboardProps) {
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -45,11 +51,11 @@ export default function Dashboard({ stats }: DashboardProps) {
           <p className="text-white/80">Monitor your crate inventory and operations</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="glass" size="sm">
+          <Button variant="glass" size="sm" onClick={onScanCrate}>
             <Scan className="h-4 w-4 mr-2" />
             Scan Crate
           </Button>
-          <Button variant="glass" size="sm">
+          <Button variant="glass" size="sm" onClick={onAddCrate}>
             <Plus className="h-4 w-4 mr-2" />
             Add Crate
           </Button>

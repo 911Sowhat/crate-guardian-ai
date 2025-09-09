@@ -140,6 +140,15 @@ const Index = () => {
     console.log('Line clicked:', line);
   };
 
+  const handleScanCrate = () => {
+    setActiveTab('scanner');
+  };
+
+  const handleAddCrate = () => {
+    console.log('Add new crate functionality');
+    // TODO: Implement add crate modal/form
+  };
+
   return (
     <div className="min-h-screen bg-gradient-primary">
       <div className="container mx-auto p-6">
@@ -172,7 +181,7 @@ const Index = () => {
           </TabsList>
 
           <TabsContent value="dashboard">
-            <Dashboard stats={mockStats} />
+            <Dashboard stats={mockStats} onScanCrate={handleScanCrate} onAddCrate={handleAddCrate} />
           </TabsContent>
 
           <TabsContent value="crates" className="space-y-6">
