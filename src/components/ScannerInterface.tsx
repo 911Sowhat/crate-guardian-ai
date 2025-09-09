@@ -217,10 +217,10 @@ export default function ScannerInterface() {
                   </Badge>
                 </div>
                 <div className="flex gap-2 pt-2">
-                  <Button variant="outline" className="flex-1">
+                  <Button variant="outline" className="flex-1" onClick={() => console.log('View details for', scanResult.crateId)}>
                     View Details
                   </Button>
-                  <Button className="flex-1 bg-warehouse-primary">
+                  <Button className="flex-1 bg-warehouse-primary" onClick={() => console.log('Update status for', scanResult.crateId)}>
                     Update Status
                   </Button>
                 </div>
@@ -230,7 +230,7 @@ export default function ScannerInterface() {
                 <p className="text-muted-foreground">
                   No crate found with barcode: <span className="font-medium">{scanResult.barcode}</span>
                 </p>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => console.log('Register new crate with barcode:', scanResult.barcode)}>
                   Register New Crate
                 </Button>
               </div>
