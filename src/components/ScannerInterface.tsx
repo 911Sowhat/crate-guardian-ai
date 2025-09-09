@@ -3,8 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Scan, Camera, Type, CheckCircle, AlertCircle } from 'lucide-react';
+import { Scan, Camera, Type, CheckCircle, AlertCircle, Image } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useCamera } from '@/hooks/useCamera';
+import { Capacitor } from '@capacitor/core';
 
 interface ScanResult {
   barcode: string;
@@ -19,6 +21,8 @@ export default function ScannerInterface() {
   const [manualCode, setManualCode] = useState('');
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
   const [isScanning, setIsScanning] = useState(false);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const { takePicture, isSupported } = useCamera();
 
   const mockScan = (code: string) => {
     setIsScanning(true);
@@ -52,11 +56,62 @@ export default function ScannerInterface() {
     }, 1500);
   };
 
-  const handleCameraScan = () => {
-    // Simulate camera scan with random barcode
-    const mockBarcodes = ['WH001234', 'WH005678', 'WH009999'];
-    const randomCode = mockBarcodes[Math.floor(Math.random() * mockBarcodes.length)];
-    mockScan(randomCode);
+  const handleCameraScan = async () => {
+    try {
+      setIsScanning(true);
+      
+      if (Capacitor.isNativePlatform() || navigator.mediaDevices) {
+        // Use real camera
+        const imageDataUrl = await takePicture();
+        setCapturedImage(imageDataUrl);
+        
+        // Simulate barcode processing from image
+        // In a real app, you'd use a barcode detection library here
+        await processImageForBarcode(imageDataUrl);
+      } else {
+        // Fallback to mock scan
+        const mockBarcodes = ['WH001234', 'WH005678', 'WH009999'];
+        const randomCode = mockBarcodes[Math.floor(Math.random() * mockBarcodes.length)];
+        await mockScan(randomCode);
+      }
+    } catch (error) {
+      console.error('Camera scan failed:', error);
+      setIsScanning(false);
+    }
+  };
+
+  const processImageForBarcode = async (imageDataUrl: string) => {
+    // Simulate processing time
+    setTimeout(() => {
+      // For demo, randomly assign a barcode result
+      const mockBarcodes = ['WH001234', 'WH005678', 'WH009999'];
+      const randomCode = mockBarcodes[Math.floor(Math.random() * mockBarcodes.length)];
+      
+      const mockResults: ScanResult[] = [
+        { 
+          barcode: 'WH001234', 
+          found: true, 
+          crateId: 'CR-001234',
+          customerName: 'ABC Manufacturing Corp',
+          status: 'available'
+        },
+        { 
+          barcode: 'WH005678', 
+          found: true, 
+          crateId: 'CR-005678',
+          customerName: 'Global Logistics Ltd',
+          status: 'scheduled_delivery'
+        },
+        { 
+          barcode: randomCode, 
+          found: false 
+        }
+      ];
+      
+      const result = mockResults.find(r => r.barcode === randomCode) || mockResults[2];
+      setScanResult(result);
+      setIsScanning(false);
+    }, 2000);
   };
 
   const handleManualScan = () => {
@@ -68,6 +123,7 @@ export default function ScannerInterface() {
   const resetScan = () => {
     setScanResult(null);
     setManualCode('');
+    setCapturedImage(null);
   };
 
   return (
@@ -113,27 +169,39 @@ export default function ScannerInterface() {
         <CardContent className="space-y-4">
           {scanMode === 'camera' ? (
             <div className="space-y-4">
-              {/* Mock Camera View */}
+              {/* Camera View */}
               <div className="aspect-video bg-neutral-800 rounded-lg flex items-center justify-center relative overflow-hidden">
-                {isScanning ? (
+                {capturedImage ? (
+                  <img 
+                    src={capturedImage} 
+                    alt="Captured barcode" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : isScanning ? (
                   <div className="text-center space-y-2">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-warehouse-primary mx-auto" />
-                    <p className="text-white text-sm">Scanning...</p>
+                    <p className="text-white text-sm">
+                      {Capacitor.isNativePlatform() ? 'Processing image...' : 'Opening camera...'}
+                    </p>
                   </div>
                 ) : (
                   <div className="text-center space-y-2">
-                    <Scan className="h-12 w-12 text-neutral-400 mx-auto" />
-                    <p className="text-neutral-400 text-sm">Position barcode in frame</p>
+                    <Camera className="h-12 w-12 text-neutral-400 mx-auto" />
+                    <p className="text-neutral-400 text-sm">
+                      {isSupported ? 'Tap to open camera' : 'Tap to select image'}
+                    </p>
                   </div>
                 )}
                 
                 {/* Scanner Overlay */}
-                <div className="absolute inset-4 border-2 border-warehouse-primary rounded-lg opacity-60">
-                  <div className="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-warehouse-primary" />
-                  <div className="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 border-warehouse-primary" />
-                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 border-warehouse-primary" />
-                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-warehouse-primary" />
-                </div>
+                {!capturedImage && (
+                  <div className="absolute inset-4 border-2 border-warehouse-primary rounded-lg opacity-60">
+                    <div className="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-warehouse-primary" />
+                    <div className="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 border-warehouse-primary" />
+                    <div className="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 border-warehouse-primary" />
+                    <div className="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-warehouse-primary" />
+                  </div>
+                )}
               </div>
               
               <Button 
@@ -142,8 +210,20 @@ export default function ScannerInterface() {
                 className="w-full bg-gradient-primary"
                 size="lg"
               >
-                {isScanning ? 'Scanning...' : 'Start Scan'}
+                <Camera className="h-4 w-4 mr-2" />
+                {isScanning ? 'Processing...' : isSupported ? 'Open Camera' : 'Select Image'}
               </Button>
+              
+              {capturedImage && !isScanning && (
+                <Button 
+                  variant="outline"
+                  onClick={() => setCapturedImage(null)}
+                  className="w-full"
+                >
+                  <Image className="h-4 w-4 mr-2" />
+                  Take Another Photo
+                </Button>
+              )}
             </div>
           ) : (
             <div className="space-y-4">
